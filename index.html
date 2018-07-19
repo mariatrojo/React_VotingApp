@@ -1,0 +1,28 @@
+<script src="node_modules/react/umd/react.development.js"></script>
+<script src="node_modules/react-dom/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+<div id="content"></div>
+
+<script type="text/babel">
+
+const List = (props) => {
+    const listItems = props.items.map((itemString) => {
+		return (
+			<li key={itemString}>
+				{itemString}
+				<button onClick={ () => { alert('You have clicked on ' + itemString) }} > + </button>
+			</li>
+		)
+	});
+	console.log(listItems);
+    return (
+        <ul>
+            {listItems}
+        </ul>
+    )
+}
+ReactDOM.render(<List items= { ['React', 'Vue', 'Angular', 'Ember'] } />, document.getElementById('content'));
+
+
+</script>
