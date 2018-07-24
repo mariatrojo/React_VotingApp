@@ -6,23 +6,146 @@
 
 <script type="text/babel">
 
+// const List = (props) => {
+//     const listItems = props.items.map((itemString, index) => {
+// 		return (
+// 			<li key={index}>
+// 				{itemString.number}&nbsp;
+// 				{itemString.name}&nbsp;
+// 				<button onClick={ () => {itemString.number} + 1 } > + </button>
+// 			</li>
+// 		)
+// 	});
+
+//     return (
+//         <ul>
+//             {listItems}
+//         </ul>
+//     )
+// }
+// ReactDOM.render(<List items= {[ 
+// 	{number: 0, name: 'React'}, 
+// 	{number: 0, name: 'Vue'},
+// 	{number: 0, name: 'Angular'},
+// 	{number: 0, name: 'Ember'}
+// 	 ]} />, document.getElementById('content'));
+
+/////////
+// const List = (props) => {
+//     const listItems = props.items.map((itemString, index) => {
+// 		return (
+// 			<li key={index}>
+// 				{itemString.number}&nbsp;
+// 				{itemString.name}&nbsp;
+// 				<button onClick={ () => {itemString.number} + 1 } > + </button>
+// 			</li>
+// 		)
+// 	});
+
+//     return (
+//         <ul>
+//             {listItems}
+//         </ul>
+//     )
+// }
+// class App1 extends React.Component {
+	
+// 	constructor(props){
+// 		super(props);
+// 		this.state = 
+// 			{number: 0, name: 'React'},
+// 			{number: 0, name: 'Vue'},
+// 			{number: 0, name: 'Angular'},
+// 			{number: 0, name: 'Ember'}
+		
+// 	}
+// 	render(){
+// 		return (
+// 			<div>
+// 				{this.state.number} &nbsp;
+// 				{this.state.name} &nbsp;
+// 				<button
+// 					onClick={ () => this.setState({ number: this.state.number + 1}) } >
+// 					+
+// 				</button>
+// 			</div>
+// 		)
+// 	}
+// }
+
+//    ReactDOM.render(<App1 />, document.getElementById('content'));
+
+
+/////////
+
 const List = (props) => {
-    const listItems = props.items.map((itemString) => {
-		return (
-			<li key={itemString}>
-				{itemString}
-				<button onClick={ () => { alert('You have clicked on ' + itemString) }} > + </button>
-			</li>
-		)
-	});
-	console.log(listItems);
-    return (
-        <ul>
-            {listItems}
-        </ul>
-    )
+   const listItems = props.items.map((item, index) => {
+       return (
+           <li key={item.title}>
+               {item.count}&nbsp;
+               {item.title}&nbsp;
+               <span onClick={ () => { props.increment(index); }}> + </span>
+               <span onClick={ () => { props.decrement(index); }}> - </span>
+           </li>
+       )
+   });
+   return (
+       <ul>
+           {listItems}
+       </ul>
+   )
 }
-ReactDOM.render(<List items= { ['React', 'Vue', 'Angular', 'Ember'] } />, document.getElementById('content'));
+
+class App extends React.Component {
+
+	constructor(props) {
+		super(props);
+		this.state = {
+			list: [
+				{ title:'React', count:0 },
+				{ title:'Redux', count:0 },
+				{ title:'Node', count:0 },
+				{ title:'Express', count:0 }
+			]
+		}
+		this.increment = this.increment.bind(this)
+		this.decrement = this.decrement.bind(this)
+	}
+
+	increment(idx) {
+		const list = this.state.list;
+		list[idx].count++;
+		this.setState({
+			list
+		})
+	}
+
+	decrement(idx) {
+		const list = this.state.list;
+		list[idx].count--;
+		this.setState({
+			list
+		})
+	}
+
+	render() {
+		return (
+			<div>
+				<List
+					items={ this.state.list }
+					increment={ this.increment }
+					decrement={ this.decrement }
+				/>
+			</div>
+		)
+	}
+
+}
+
+ReactDOM.render(
+<App/>,
+document.getElementById('content')
+)
 
 
 </script>
